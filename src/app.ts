@@ -100,4 +100,6 @@ window.onload = function() {
   postlist$.subscribe(part => {
     setPostList(part);
   });
+
+  setTimeout(() => document.body.classList.add("showing"), 100);
 };

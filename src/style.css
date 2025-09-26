@@ -2,10 +2,22 @@ body {
   margin: 20px;
   background-image: url("pexels-pixabay-372748.png");
   background-repeat: no-repeat;
-  background-position: 50% 50%;
+  background-position: 25% 75%;
   color: white;
+  opacity: 0;
+  display: none;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  transition: 
+    background-position 1s allow-discrete,
+    opacity 3s allow-discrete,
+    display 1s allow-discrete;
 }
+body.showing {
+  background-position: 50% 50%;
+  opacity: 1;
+  display: block;
+}
+
 h1 {
   padding: 15px;
   background-color: rgba(0,0,255, 0.7);
@@ -17,7 +29,9 @@ h1 {
   margin-top: 30px;
   margin-bottom: 30px;
   background-color: rgba(255,255,255,0.5);
-  color: rgba(255,255,255,0.87);
+  font-size: 1.4em;
+  color: rgba(255,255,0,0.93);
+  text-shadow: -1px -1px 0 rgba(0,0,0, 1), 1px -1px 0 rgba(0,0,0, 0.7), -1px 1px 0 rgba(0,0,0, 0.7), 1px 1px 0 rgba(0,0,0, 0.7);
 }
 body h1, #toc, #root, footer {
   width: 60%;
@@ -49,4 +63,11 @@ footer {
     margin-left: 20px;
     margin-right: 20px;
   } 
+}
+
+@starting-style {
+  body.showing {
+    opacity: 0;
+    background-position: 25% 75%;
+  }
 }
