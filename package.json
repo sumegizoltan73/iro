@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "clean": "rimraf dist/",
+    "dev": "webpack --mode development --watch",
+    "init": "copyfiles -u 1 src/asset/**/*.json dist/ && copyfiles -u 1 node_modules/bootstrap/dist/css/bootstrap.min.* dist/",
+    "copy": "copyfiles -u 1 src/**/*.css dist/ && copyfiles -u 1 src/**/*.html dist/ && copyfiles -u 1 src/**/*.png dist/ && copyfiles -u 1 src/**/*.js dist/ && copyfiles -u 1 src/**/*.js.map dist/",
+    "build": "npm run clean && npm run init && tsc && npm run copy && webpack --mode production"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "rimraf": "^6.0.1",
+    "ts-loader": "^9.5.4",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "rxjs": "^7.8.2"
+  }
+}

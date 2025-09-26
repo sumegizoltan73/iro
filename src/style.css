@@ -1,0 +1,52 @@
+body {
+  margin: 20px;
+  background-image: url("pexels-pixabay-372748.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+h1 {
+  padding: 15px;
+  background-color: rgba(0,0,255, 0.7);
+}
+.toc h2, .toc h3, .toc h4, .toc h5, .toc h6 {
+  font-size: 1.1rem;
+}
+.card {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.87);
+}
+body h1, #toc, #root, footer {
+  width: 60%;
+  text-align: justify;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+h1, #toc {
+  text-align: left;
+}
+footer {
+  background-color: rgba(255,255,255,0.5);
+  color: white;
+  text-shadow: -1px -1px 0 rgba(0,0,255, 0.7), 1px -1px 0 rgba(0,0,255, 0.7), -1px 1px 0 rgba(0,0,255, 0.7), 1px 1px 0 rgba(0,0,255, 0.7);
+  text-align: center;
+}
+
+@media (max-width: 800px) {
+  body h1, #toc, #root, footer {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+  } 
+}
+
+@media (max-width: 600px) {
+  body h1, #toc, #root, footer {
+    width: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+  } 
+}
