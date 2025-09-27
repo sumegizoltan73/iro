@@ -132,14 +132,6 @@ function setSeconds(seconds: number) {
     (<HTMLSpanElement>secondsPointer).style.rotate = `${rotateSeconds + 90}deg`;
   }
 }
-function handleIdoTeszt() {
-  const ido = (<HTMLInputElement>document.getElementById("tesztido"))?.value.split(":");
-  console.log(ido);
-  if (ido && ido[0] && ido[1]) {
-    console.log(ido[0], ido[1]);
-    setClock(parseInt(ido[0]), parseInt(ido[1]), 0, 19);
-  }
-}
 
 window.onload = function() {
   const root = document.getElementById("root");
@@ -153,12 +145,6 @@ window.onload = function() {
   setTimeout(() => document.body.classList.add("showing"), 100);
   setTimeout(() => document.body.classList.add("reading"), 1100);
 
-  const btnTeszt = document.getElementById("tesztido")?.nextSibling?.nextSibling;
-  console.log(btnTeszt);
-  if (btnTeszt) {
-    console.log("handle");
-    (<HTMLButtonElement>btnTeszt).onclick = () => handleIdoTeszt();
-  }
   handleClockInterval();
   //const clockIntervalID = setInterval(handleClockInterval, (1000 * 60));
   const secondsIntervalID = setInterval(handleSecondsInterval, 1000);
