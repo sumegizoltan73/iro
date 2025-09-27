@@ -3,24 +3,41 @@ body {
   background-image: url("pexels-pixabay-372748.png");
   background-repeat: no-repeat;
   background-position: 25% 75%;
+  background-size: 100%;
   color: white;
   opacity: 0;
   display: none;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   transition: 
     background-position 1s allow-discrete,
+    background-size 1s allow-discrete,
     opacity 3s allow-discrete,
-    display 1s allow-discrete;
+    display 1s allow-discrete,
+    color 1s allow-discrete,
+    text-shadow 1s allow-discrete;
 }
 body.showing {
   background-position: 50% 50%;
+  background-size: 90%;
   opacity: 1;
   display: block;
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  
+}
+body.reading {
+  background-position: 75% 12%;
+  background-size: 10%;
+  color: rgba(0,0,255, 0.7);
+  text-shadow: none;
 }
 
 h1 {
   padding: 15px;
   background-color: rgba(0,0,255, 0.7);
+  color: white;
+  box-shadow: 5px 5px 10px 1px gray;
+  animation: headAnim 2s ease 0s 1 normal forwards;
 }
 .toc h2, .toc h3, .toc h4, .toc h5, .toc h6 {
   font-size: 1.1rem;
@@ -32,6 +49,13 @@ h1 {
   font-size: 1.4em;
   color: rgba(255,255,0,0.93);
   text-shadow: -1px -1px 0 rgba(0,0,0, 1), 1px -1px 0 rgba(0,0,0, 0.7), -1px 1px 0 rgba(0,0,0, 0.7), 1px 1px 0 rgba(0,0,0, 0.7);
+  transition: 
+    color 2s allow-discrete,
+    text-shadow 2s allow-discrete;
+}
+body.reading .card {
+  color: rgba(0,0,255, 0.7);
+  text-shadow: none;
 }
 body h1, #toc, #root, footer {
   width: 60%;
@@ -49,20 +73,157 @@ footer {
   text-align: center;
 }
 
+div.link {
+  position: absolute;
+  right: 20%;
+  top: 60px;
+  padding-right: 30px;
+  rotate: 0deg;
+  transition: 
+    rotate 2s allow-discrete;
+  transition-delay: 2s;
+}
+div.link a {
+  color: white;
+  text-decoration: none;
+}
+div.link a:hover {
+  color: lightgray;
+}
+body.reading div.link {
+  rotate: 45deg;
+}
+
+.card-body {
+  perspective: 600px;
+}
+.card-body .container {
+  transform: rotateX(0deg) rotateY(76deg);
+  transform-style: preserve-3d;
+  transition: 
+    transform 2s allow-discrete;
+}
+body.reading .card-body .container {
+  transform: rotateX(0deg) rotateY(0deg);
+}
+
+.clock {
+  margin-left: 140px;
+}
+.clock a, .clock span.pointer, .clock span.numbers {
+  position: relative;
+  top: 0px;
+}
+.clock .pointer {
+  display: block;
+  text-align: left;
+  clear: both;
+  width: 1px;
+  height: 1px;
+  direction: rtl;
+}
+.clock a.big-pointer {
+  rotate: 45deg;
+}
+.clock a.small-pointer {
+  rotate: 270deg;
+}
+.clock span.seconds-pointer {
+  height: 1px;
+  text-decoration: underline;
+}
+.clock span.clock-text {
+  position: relative;
+  top: 160px;
+  left: -70px;
+}
+.clock span.numbers {
+  color: rgba(0,0,255, 0.7);
+  font-weight: bold;
+  display: block;
+  text-align: left;
+  clear: both;
+}
+.clock span.num12 {
+  margin-top: -180px;
+  top: 0px;
+  left: -20px;
+}
+.clock span.num1 {
+  top: -15px;
+  left: 55px;
+}
+.clock span.num2 {
+  top: 10px;
+  left: 115px;
+}
+.clock span.num3 {
+  top: 55px;
+  left: 135px;
+}
+.clock span.num4 {
+  top: 105px;
+  left: 125px;
+}
+.clock span.num5 {
+  top: 145px;
+  left: 85px;
+}
+.clock span.num6 {
+  top: 155px;
+  left: 10px;
+}
+.clock span.num7 {
+  top: 115px;
+  left: -50px;
+}
+.clock span.num8 {
+  top: 25px;
+  left: -115px;
+}
+.clock span.num9 {
+  top: -65px;
+  left: -135px;
+}
+.clock span.num10 {
+  top: -155px;
+  left: -130px;
+}
+.clock span.num11 {
+  top: -235px;
+  left: -90px;
+}
+
 @media (max-width: 800px) {
   body h1, #toc, #root, footer {
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    width: 90%;
+    margin-left: 10px;
+    margin-right: 10px;
   } 
+  body.reading {
+    background-position: 83% 20%;
+    background-size: 30%;
+  }
+  .clock {
+    margin-top: 140px;
+    margin-bottom: 140px;
+  }
 }
 
 @media (max-width: 600px) {
   body h1, #toc, #root, footer {
-    width: 100%;
-    margin-left: 20px;
-    margin-right: 20px;
+    width: 90%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  body.reading {
+    background-position: 83% 10%;
+    background-size: 30%;
   } 
+  .clock {
+    margin-top: 140px;
+    margin-bottom: 140px;
+  }
 }
 
 @starting-style {
@@ -70,4 +231,48 @@ footer {
     opacity: 0;
     background-position: 25% 75%;
   }
+}
+
+@keyframes headAnim {
+	0% {
+		animation-timing-function: ease-in;
+		opacity: 0;
+		transform: translateY(-250px);
+	}
+
+	38% {
+		animation-timing-function: ease-out;
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	55% {
+		animation-timing-function: ease-in;
+		transform: translateY(-65px);
+	}
+
+	72% {
+		animation-timing-function: ease-out;
+		transform: translateY(0);
+	}
+
+	81% {
+		animation-timing-function: ease-in;
+		transform: translateY(-28px);
+	}
+
+	90% {
+		animation-timing-function: ease-out;
+		transform: translateY(0);
+	}
+
+	95% {
+		animation-timing-function: ease-in;
+		transform: translateY(-8px);
+	}
+
+	100% {
+		animation-timing-function: ease-out;
+		transform: translateY(0);
+	}
 }
