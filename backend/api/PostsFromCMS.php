@@ -9,12 +9,13 @@
     $dbTablePretag = $config->dbTablePretag;
     $port = $config->port;
     $apikeypart = $config->apikeypart;
+    $cmskeypart = $config->cmskeypart;
 
   if($_SERVER['REQUEST_METHOD'] == "GET"){
     $apikey = $_GET["apikey"];
     $title = $_GET["title"];
     
-    if (isset($apikey) && (substr($apikey, 4,10) == $apikeypart) || $apikey == "cmskey75") {
+    if (isset($apikey) && (substr($apikey, 4,10) == $apikeypart) || $apikey == $cmskeypart) {
       $password = $storedpw;
       
       // Create connection
