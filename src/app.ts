@@ -133,6 +133,79 @@ function setSeconds(seconds: number) {
   }
 }
 
+function SVGClock(){
+  const svg: SVGSVGElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.style.width = "300px";
+  svg.style.height = "300px";
+  svg.setAttribute('width', '300');
+  svg.setAttribute('height', '300');
+  SVGCircle(svg, 150, 150, 70, undefined, undefined, "var(--bs-border-color-translucent)");
+  SVGLine(svg, 150, 150, 70, 0, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 30, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 60, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 90, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 120, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 150, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 180, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 210, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 240, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 270, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 300, "var(--bs-gray-500)", undefined);
+  SVGLine(svg, 150, 150, 70, 330, "var(--bs-gray-500)", undefined);
+  SVGCircle(svg, 150, 150, 60, undefined, undefined, "white");
+  SVGCircle(svg, 150, 150, 60, undefined, undefined, "rgba(var(--bs-warning-rgb),0.2)");
+  
+  const wrapper = document.createElement("div");
+  wrapper.style.height = "300px";
+  wrapper.appendChild(svg);
+  document.body.appendChild(wrapper);
+
+  // x' = x cos (fi) - y sin (fi)
+  // y' = x sin (fi) + y cos (fi)
+}
+function SVGCircle(
+    svg: SVGSVGElement, 
+    cx: number, 
+    cy: number, 
+    r: number,
+    stroke: string|undefined,
+    strokeWidth: string|undefined,
+    fill: string|undefined
+  ){
+  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  if (fill) circle.style.fill = fill;
+  if (stroke) circle.style.stroke = stroke;
+  if (strokeWidth) circle.style.strokeWidth = strokeWidth;
+  circle.setAttribute('cx', `${cx}`);
+  circle.setAttribute('cy', `${cy}`);
+  circle.setAttribute('r', `${r}`);
+  svg.append(circle);
+}
+function SVGLine(
+    svg: SVGSVGElement, 
+    x1: number, 
+    y1: number, 
+    length: number, 
+    degrees: number, 
+    stroke: string|undefined, 
+    width: string|undefined
+  ){
+  const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  line.style.stroke = stroke ?? "#0000ff";
+  line.style.strokeWidth = width ?? "6";
+  line.setAttribute('x1', `${x1}`);
+  line.setAttribute('y1', `${y1}`);
+  const x1EndPoint = 0;
+  const y1EndPoint = 0 - length;
+  const rad = Math.PI / 180.0;
+  console.log(degrees, degrees * rad);
+  const x2 = x1EndPoint * Math.cos(degrees * rad) - y1EndPoint * Math.sin(degrees * rad);
+  const y2 = x1EndPoint * Math.sin(degrees * rad) + y1EndPoint * Math.cos(degrees * rad);
+  line.setAttribute('x2', `${x2 + x1}`);
+  line.setAttribute('y2', `${y2 + y1}`);
+  svg.append(line);
+}
+
 window.onload = function() {
   const root = document.getElementById("root");
   if (!root) return;
@@ -148,4 +221,6 @@ window.onload = function() {
   handleClockInterval();
   //const clockIntervalID = setInterval(handleClockInterval, (1000 * 60));
   const secondsIntervalID = setInterval(handleSecondsInterval, 1000);
+
+  SVGClock();
 };
