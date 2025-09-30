@@ -89,20 +89,19 @@ function setPostList(part: PostListType){
   document.createElement("table-of-content");
 }
 
-function handleClockInterval() {
-  let hour: number = 12;
-  let minute: number = 15;
-  let seconds: number;
+function getNow(){
   const now = new Date();
-  hour = now.getHours() > 12 ? now.getHours() - 12 : now.getHours();
-  minute = now.getMinutes();
-  seconds = now.getSeconds();
-  setClock(hour, minute, seconds, now.getHours());
+  const hour = now.getHours() > 12 ? now.getHours() - 12 : now.getHours();
+  const minute = now.getMinutes();
+  const seconds = now.getSeconds();
+  return { hour, minute, seconds, realHour: now.getHours() };
+}
+function handleClockInterval() {
+  const {hour, minute, seconds, realHour} = getNow();
+  setClock(hour, minute, seconds, realHour);
 }
 function handleSecondsInterval() {
-  let seconds: number;
-  const now = new Date();
-  seconds = now.getSeconds();
+  const { seconds } = getNow();
   setSeconds(seconds);
   if (seconds === 15) { 
     handleClockInterval();
@@ -154,14 +153,49 @@ function SVGClock(){
   SVGLine(svg, 150, 150, 70, 330, "var(--bs-gray-500)", undefined);
   SVGCircle(svg, 150, 150, 60, undefined, undefined, "white");
   SVGCircle(svg, 150, 150, 60, undefined, undefined, "rgba(var(--bs-warning-rgb),0.2)");
+
+  // mutatók
+  SVGLine(svg, 150, 150, 55, 0, undefined, "3");
+  SVGLine(svg, 150, 150, 40, 90, undefined, "6");
+  SVGLine(svg, 150, 150, 60, 150, undefined, "1");
   
   const wrapper = document.createElement("div");
   wrapper.style.height = "300px";
   wrapper.appendChild(svg);
-  document.body.appendChild(wrapper);
 
+  const clock = document.getElementById("svgclock");
+  if (!clock) {
+    document.body.appendChild(wrapper);
+  }
+  else {
+    clock.appendChild(wrapper);
+  }
   // x' = x cos (fi) - y sin (fi)
   // y' = x sin (fi) + y cos (fi)
+
+  const setSVGClock = (forceHourAndMinute: boolean|undefined) => {
+    const {hour, minute, seconds, realHour} = getNow();
+    const secondsLine = svg.children[17] as SVGLineElement;
+    const { x2, y2 } = getSVGLineEndpoints(150, 150, 60, 360 * (seconds / 60));
+    if (`${x2}${y2}` !== 'NaNNaN') {
+      secondsLine.setAttribute('x2', `${x2}`);
+      secondsLine.setAttribute('y2', `${y2}`);
+    }
+    if (forceHourAndMinute || seconds === 0) {
+      // set hour and minute
+      const minuteLine = svg.children[15] as SVGLineElement;
+      const hourLine = svg.children[16] as SVGLineElement;
+      const mCoord = getSVGLineEndpoints(150, 150, 55, 360 * (minute / 60));
+      const hCoord = getSVGLineEndpoints(150, 150, 40, (360 * (hour / 12)) + ((360 / 12) * (minute / 60)));
+      minuteLine.setAttribute('x2', `${mCoord.x2}`);
+      minuteLine.setAttribute('y2', `${mCoord.y2}`);
+      hourLine.setAttribute('x2', `${hCoord.x2}`);
+      hourLine.setAttribute('y2', `${hCoord.y2}`);
+    }
+  };
+  let secondsIntervalID = setInterval(setSVGClock, 1000);
+  let minuteIntervalID = setInterval(() => setSVGClock(true), 60 * 1000);
+  setSVGClock(true);
 }
 function SVGCircle(
     svg: SVGSVGElement, 
@@ -181,6 +215,21 @@ function SVGCircle(
   circle.setAttribute('r', `${r}`);
   svg.append(circle);
 }
+function getSVGLineEndpoints(
+    x1: number, 
+    y1: number, 
+    length: number, 
+    degrees: number
+  ){
+  const x1EndPoint = 0;
+  const y1EndPoint = 0 - length;
+  const rad = Math.PI / 180.0;
+  let x2 = x1EndPoint * Math.cos(degrees * rad) - y1EndPoint * Math.sin(degrees * rad);
+  let y2 = x1EndPoint * Math.sin(degrees * rad) + y1EndPoint * Math.cos(degrees * rad);
+  x2 += x1;
+  y2 += y1;
+  return {x2, y2};
+}
 function SVGLine(
     svg: SVGSVGElement, 
     x1: number, 
@@ -195,14 +244,9 @@ function SVGLine(
   line.style.strokeWidth = width ?? "6";
   line.setAttribute('x1', `${x1}`);
   line.setAttribute('y1', `${y1}`);
-  const x1EndPoint = 0;
-  const y1EndPoint = 0 - length;
-  const rad = Math.PI / 180.0;
-  console.log(degrees, degrees * rad);
-  const x2 = x1EndPoint * Math.cos(degrees * rad) - y1EndPoint * Math.sin(degrees * rad);
-  const y2 = x1EndPoint * Math.sin(degrees * rad) + y1EndPoint * Math.cos(degrees * rad);
-  line.setAttribute('x2', `${x2 + x1}`);
-  line.setAttribute('y2', `${y2 + y1}`);
+  const { x2, y2 } = getSVGLineEndpoints(x1, y1, length, degrees);
+  line.setAttribute('x2', `${x2}`);
+  line.setAttribute('y2', `${y2}`);
   svg.append(line);
 }
 
