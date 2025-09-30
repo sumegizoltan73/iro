@@ -37,7 +37,7 @@ customElements.define(
       container.appendChild(textBefore);
       const tocDiv = document.getElementById("toc");
       if (tocDiv) {
-        tocDiv.className = "toc";
+        tocDiv.classList.add("toc");
         tocDiv.appendChild(container);
       }
       this.setParsedHead(template, container, ["h1", "h2", "h3", "h4", "h5", "h6"]);

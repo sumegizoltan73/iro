@@ -26,7 +26,7 @@ body.showing {
   
 }
 body.reading {
-  background-position: 75% 12%;
+  background-position: 65% 12%;
   background-size: 10%;
   color: rgba(0,0,255, 0.7);
   text-shadow: none;
@@ -58,10 +58,7 @@ body.reading .card {
   text-shadow: none;
 }
 body h1, #toc, #root, footer {
-  width: 60%;
   text-align: justify;
-  margin-left: 20%;
-  margin-right: 20%;
 }
 h1, #toc {
   text-align: left;
@@ -74,10 +71,10 @@ footer {
 }
 
 div.link {
-  position: absolute;
-  right: 20%;
-  top: 60px;
-  padding-right: 30px;
+  position: relative;
+  left: 87%;
+  margin-top: -12px;
+  width: 200px;
   rotate: 0deg;
   transition: 
     rotate 2s allow-discrete;
@@ -109,6 +106,8 @@ body.reading .card-body .container {
 
 .clock {
   margin-left: 140px;
+  position: relative;
+  top: 70px;
 }
 .clock a, .clock span.pointer, .clock span.numbers {
   position: relative;
