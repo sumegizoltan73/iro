@@ -1,5 +1,6 @@
 import { ajax } from "rxjs/ajax";
 import { map } from "rxjs";
+import SVGClockType from "./SVGClock";
 
 export type PostItemType = {
   title: string;
@@ -177,7 +178,7 @@ function SVGClock(){
     const {hour, minute, seconds, realHour} = getNow();
     const secondsLine = svg.children[17] as SVGLineElement;
     const { x2, y2 } = getSVGLineEndpoints(150, 150, 60, 360 * (seconds / 60));
-    if (`${x2}${y2}` !== 'NaNNaN') {
+    if (!/NaN/.test(`${x2}${y2}`)) {
       secondsLine.setAttribute('x2', `${x2}`);
       secondsLine.setAttribute('y2', `${y2}`);
     }
@@ -266,5 +267,7 @@ window.onload = function() {
   //const clockIntervalID = setInterval(handleClockInterval, (1000 * 60));
   const secondsIntervalID = setInterval(handleSecondsInterval, 1000);
 
-  SVGClock();
+  //SVGClock();     // old method for SVGClock
+
+  const instance = new SVGClockType("svgclock", 300, {}); // new method with the import
 };
