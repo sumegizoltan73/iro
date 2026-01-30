@@ -1,8 +1,8 @@
 body {
   margin: 20px;
-  background-image: url("pexels-pixabay-372748.png");
+  background-image: url("ChatGPT_Webpage_header.png");
   background-repeat: no-repeat;
-  background-position: 25% 75%;
+  background-position: 0% 5%;
   background-size: 100%;
   color: white;
   opacity: 0;
@@ -17,8 +17,6 @@ body {
     text-shadow 1s allow-discrete;
 }
 body.showing {
-  background-position: 50% 50%;
-  background-size: 90%;
   opacity: 1;
   display: block;
   color: white;
@@ -26,10 +24,15 @@ body.showing {
   
 }
 body.reading {
-  background-position: 65% 12%;
-  background-size: 10%;
   color: rgba(0,0,255, 0.7);
   text-shadow: none;
+}
+
+.root-container {
+  background-image: url("ChatGPT_Image_4.png");
+  background-repeat: no-repeat;
+  background-position: 20% 15%;
+  background-size: 100%;
 }
 
 h1 {

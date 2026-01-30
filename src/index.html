@@ -5,9 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Sümegi Zoltán Péter írói weboldala. Magamról írói szemmel, és az írói karrieremről, írásaim történetéről olvashatnak az oldalon." />
   <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="./style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <title>Írói Weboldal - Sümegi Zoltán Péter</title>
+  <script>
+    const script = document.createElement("script");
+    script.src = `./app.js?nocache=${Date.now()}`;
+    script.type = "module"; 
+    document.head.appendChild(script);
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.href = `./style.css?nocache=${Date.now()}`; 
+    document.head.appendChild(style);
+  </script>
 </head>
 <body>
   <!-- HEAD -->
@@ -46,8 +55,24 @@
   </div>
   <div class="row">
     <div class="col col-12 col-lg-3"></div>
-    <div class="col col-12 col-lg-6">
+    <div class="root-container col col-12 col-lg-6">
       <div id="root"></div>
+      <div>
+        <p>Íme néhány rajz ChatGPT-vel közös munkaként, vagyis az egyik könyvborítót is alkotó rajzom vázával.</p>
+        2026-01-26
+        <br />
+        <img src="ChatGPT_Image_1.png" alt="Csodált Hold" style="width: 100%;" />
+        <br />
+        A csodált Hold
+        <br />
+        <img src="ChatGPT_Image_2.png" alt="Az Űrhajó belsejéből" style="width: 100%;" />
+        <br />
+        Űrutazás egy öregember szemszögéből
+        <br />
+        <img src="ChatGPT_Image_3_thumbnail.png" alt="Planetáris rendszer" style="width: 100%;" />
+        <br />
+        Planetáris rendszer
+      </div>
     </div>
     <div class="col col-12 col-lg-3"></div>
   </div>
@@ -61,6 +86,5 @@
     </div>
     <div class="col col-12 col-lg-3"></div>
   </div>
-  <script src="./app.js" type="module"></script>
 </body>
 </html>

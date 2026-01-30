@@ -52,12 +52,21 @@ customElements.define(
       }
       const regexp = new RegExp(/<\/h1>|<\/h2>|<\/h3>|<\/h4>|<\/h5>|<\/h6>/g);
       map = (<HTMLElement>node).innerHTML.matchAll(regexp);
+      let i = 0;
       for (const regexpItem of map) {
         const tag = regexpItem[0].replace("<\/", "").replace(">", "");
         const tagIndex = collections[`${tag}Index`] ?? 0;
         const head = collections[tag][tagIndex];
-        (<HTMLElement>container).appendChild((<HTMLElement>head).cloneNode(true));
+        const link = document.createElement("a");
+        link.href = `#post_${i}`;
+        link.style.display = "block";
+        link.style.padding = "5px 5px";
+        const clonedHead = document.createElement(`${(<HTMLElement>head).tagName}`);
+        link.innerHTML = (<HTMLElement>head).children[0]?.innerHTML ?? "";
+        clonedHead.appendChild(link);   //(<HTMLElement>head).cloneNode(true)
+        (<HTMLElement>container).appendChild(clonedHead);
         collections[`${tag}Index`] = tagIndex + 1;
+        i++;
       }
     }
   },
@@ -67,6 +76,7 @@ function setPostList(part: PostListType){
   const root = document.getElementById("root");
   if (!root) return;
   
+  let i = 0;
   for (const element of part.posts) {
     const wrapper = document.createElement("div");
     wrapper.className = "card";
@@ -76,7 +86,10 @@ function setPostList(part: PostListType){
     wrapper.appendChild(cardbody);
     const head = document.createElement("h2");
     head.className = "card-title";
-    head.innerHTML = element.title.replace("CV ", "");
+    const anchor = document.createElement("a");
+    anchor.innerHTML = element.title.replace("CV ", "");
+    anchor.id = `post_${i}`;
+    head.appendChild(anchor);
     cardbody.appendChild(head);
     const container = document.createElement("div");
     container.className = "container";
@@ -85,6 +98,7 @@ function setPostList(part: PostListType){
     const modified = document.createElement("div");
     modified.innerHTML = element.modified;
     cardbody.appendChild(modified);
+    i++;
   }
 
   document.createElement("table-of-content");
